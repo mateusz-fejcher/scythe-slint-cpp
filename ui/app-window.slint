@@ -1,7 +1,6 @@
-import { Button, VerticalBox, GridBox, Slider } from "std-widgets.slint";
+import { Button, VerticalBox, Slider } from "std-widgets.slint";
 import { MySlider } from "MySlider.slint";
 import { HumidityPage } from "HumidityPage.slint";
-import { Button, VerticalBox, GridBox, Slider } from "std-widgets.slint";
 
 export component AppWindow inherits Window {
     property <int> temperature: 20;
@@ -13,27 +12,33 @@ export component AppWindow inherits Window {
     background: #141218;
 
     VerticalBox {
-        alignment: LayoutAlignment.stretch;
-        spacing: 0px;
+        horizontal-stretch: 1;
+        vertical-stretch: 1;
         padding: 24px;
 
         // Header
         Text {
+            vertical-stretch: 1;
+            horizontal-stretch: 1;
             text: "Hello, Mateusz!";
             font-size: 32px;
             color: #ffffff;
         }
 
         HorizontalLayout {
-            height: 80%;
+            vertical-stretch: 9;
+            horizontal-stretch: 1;
+            spacing: 16px;
 
             // Left Side: Buttons Grid
-            GridBox {
+            GridLayout {
+                vertical-stretch: 1;
+                horizontal-stretch: 4;
                 spacing: 8px; // Add spacing between buttons
+                
                 Button {
-                    width: 100%;
-                    height: 100%;
-                    checkable: true;
+                    vertical-stretch: 1;
+                    horizontal-stretch: 1;
                     text: "Temperature: " + temperature + "°C";
                     row: 0;
                     col: 0;
@@ -44,9 +49,8 @@ export component AppWindow inherits Window {
                 }
 
                 Button {
-                    width: 100%;
-                    height: 100%;
-                    checkable: true;
+                    vertical-stretch: 1;
+                    horizontal-stretch: 1;
                     text: "Humidity: " + humidity_info;
                     row: 0;
                     col: 1;
@@ -57,9 +61,8 @@ export component AppWindow inherits Window {
                 }
 
                 Button {
-                    width: 100%;
-                    height: 100%;
-                    checkable: true;
+                    vertical-stretch: 1;
+                    horizontal-stretch: 1;
                     text: "Power consumption: 25.0kW/h";
                     row: 1;
                     col: 0;
@@ -70,9 +73,8 @@ export component AppWindow inherits Window {
                 }
 
                 Button {
-                    width: 100%;
-                    height: 100%;
-                    checkable: true;
+                    vertical-stretch: 1;
+                    horizontal-stretch: 1;
                     text: "Air quality: good";
                     row: 1;
                     col: 1;
@@ -84,21 +86,20 @@ export component AppWindow inherits Window {
             }
 
             // Side Panel
-            sidePanel := Rectangle {
-                width: 50%;
+            Rectangle {
+                horizontal-stretch: 4;
+                vertical-stretch: 1;
                 background: #2c2c2c;
-                padding: 16px;
-
-                // Temperature Page
                 Rectangle {
                     visible: current_page == "temperature";
                     Slider {
                         orientation: Orientation.vertical;
                         height: 100%;
-                        width: 10%;
+                        horizontal-stretch: 1;
                         minimum: 0;
                         maximum: 30;
                         value: temperature;
+                        visible: current_page == "temperature";
 
                         changed(value) => {
                             temperature = value;
@@ -119,23 +120,22 @@ export component AppWindow inherits Window {
                         spacing: 8px; // Add spacing between buttons
                         Button {
                             text: "High";
-                            checkable: true;
                             checked: humidity_info == "high"; // Bind checked state to humidity_info
                             clicked => {
                                 humidity_info = "high";
                             }
                         }
+
                         Button {
                             text: "Medium";
-                            checkable: true;
                             checked: humidity_info == "medium"; // Bind checked state to humidity_info
                             clicked => {
                                 humidity_info = "medium";
                             }
                         }
+
                         Button {
                             text: "Low";
-                            checkable: true;
                             checked: humidity_info == "low"; // Bind checked state to humidity_info
                             clicked => {
                                 humidity_info = "low";
@@ -147,6 +147,11 @@ export component AppWindow inherits Window {
                 // Power Consumption Page
                 Rectangle {
                     visible: current_page == "power";
+                    Text {
+                        text: "power";
+                        font-size: 24px;
+                        color: #ffffff;
+                    }
                 }
 
                 // Air Quality Page
