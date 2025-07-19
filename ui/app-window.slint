@@ -33,12 +33,14 @@ export component AppWindow inherits Window {
             // Left Side: Buttons Grid
             GridLayout {
                 vertical-stretch: 1;
-                horizontal-stretch: 4;
-                spacing: 8px; // Add spacing between buttons
+                horizontal-stretch: 8;
+                spacing: 8px; // Add spacing betw8een buttons
                 
                 Button {
                     vertical-stretch: 1;
                     horizontal-stretch: 1;
+                    min-width: 0;
+                    preferred-width: 0;
                     text: "Temperature: " + temperature + "°C";
                     row: 0;
                     col: 0;
@@ -51,6 +53,8 @@ export component AppWindow inherits Window {
                 Button {
                     vertical-stretch: 1;
                     horizontal-stretch: 1;
+                    min-width: 0;
+                    preferred-width: 0;
                     text: "Humidity: " + humidity_info;
                     row: 0;
                     col: 1;
@@ -63,6 +67,8 @@ export component AppWindow inherits Window {
                 Button {
                     vertical-stretch: 1;
                     horizontal-stretch: 1;
+                    min-width: 0;
+                    preferred-width: 0;
                     text: "Power consumption: 25.0kW/h";
                     row: 1;
                     col: 0;
@@ -75,6 +81,8 @@ export component AppWindow inherits Window {
                 Button {
                     vertical-stretch: 1;
                     horizontal-stretch: 1;
+                    min-width: 0;
+                    preferred-width: 0;
                     text: "Air quality: good";
                     row: 1;
                     col: 1;
@@ -87,21 +95,20 @@ export component AppWindow inherits Window {
 
             // Side Panel
             Rectangle {
-                horizontal-stretch: 4;
+                horizontal-stretch: 2;
                 vertical-stretch: 1;
                 background: #2c2c2c;
                 Rectangle {
                     visible: current_page == "temperature";
-                    Slider {
-                        orientation: Orientation.vertical;
+                    MySlider {
                         height: 100%;
-                        horizontal-stretch: 1;
+                        width: 50%;
                         minimum: 0;
                         maximum: 30;
                         value: temperature;
                         visible: current_page == "temperature";
 
-                        changed(value) => {
+                        valueChanged(value) => {
                             temperature = value;
                         }
                     }
