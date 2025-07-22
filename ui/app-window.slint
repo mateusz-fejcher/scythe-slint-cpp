@@ -1,6 +1,7 @@
 import { Button, VerticalBox, Slider } from "std-widgets.slint";
 import { MySlider } from "MySlider.slint";
 import { HumidityPage } from "HumidityPage.slint";
+import { PowerPage } from "PowerConsumptionPage.slint";
 
 export component AppWindow inherits Window {
     property <int> temperature: 20;
@@ -154,10 +155,9 @@ export component AppWindow inherits Window {
                 // Power Consumption Page
                 Rectangle {
                     visible: current_page == "power";
-                    Text {
-                        text: "power";
-                        font-size: 24px;
-                        color: #ffffff;
+                    PowerPage {
+                        width: 100%;
+                        height: 100%;
                     }
                 }
 
