@@ -12,13 +12,13 @@ export component MyPower inherits Rectangle {
 }
 
 export component PowerPage inherits Flickable {
-        // viewport_width: parent.width;s
-        viewport_height: (120px * 6) + 100px;
+    // viewport_width: parent.width;s
+    viewport_height: (120px * 6) + 100px;
 
     interactive: true;
 
-        // array with 21 empty objects. Used only to create the same 21 rectangles. 
-        for data[index] in [
+    // array with 21 empty objects. Used only to create the same 21 rectangles. 
+    for data[index] in [
         { },
         { },
         { },
@@ -45,6 +45,41 @@ export component PowerPage inherits Flickable {
         x: 120px * Math.mod(index,3);
         width: 100px;
         height: 100px;
-        background: #ff0000;
+        background: #3a3a3a;
+        border-radius: 10px;
+
+        VerticalLayout {
+            padding-top: 8px;
+            padding-bottom: 8px;
+
+            Image {
+                source: @image-url("Icons/power.svg");
+                vertical-stretch: 1;
+                horizontal-alignment: center;
+            }
+
+            Text {
+                text: "Outlet " + (index + 1);
+                vertical-stretch: 1;
+                horizontal-alignment: center;
+                font-size: 16px;
+                color: #ffffff;
+            }
+
+            Text {
+                text: (index + 1) + " kW/h";
+                vertical-stretch: 1;
+                horizontal-alignment: center;
+                font-size: 16px;
+                color: #ffffff;
+            }
+        }
+    }
+}
+
+export component Recipe inherits Window {
+    PowerPage {
+        width: 400px;
+        height: 400px;
     }
 }
