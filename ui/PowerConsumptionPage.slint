@@ -1,4 +1,5 @@
 import { ScrollView } from "std-widgets.slint";
+import { PowerConsumptionItem } from "PowerConsumptionItem.slint";
 export component MyPower inherits Rectangle {
     in-out property <float> text;
 
@@ -12,7 +13,6 @@ export component MyPower inherits Rectangle {
 }
 
 export component PowerPage inherits Flickable {
-    // viewport_width: parent.width;s
     viewport_height: (120px * 6) + 100px;
 
     interactive: true;
@@ -40,40 +40,15 @@ export component PowerPage inherits Flickable {
         { },
         { },
         { },
-    ]: Rectangle {
+    ]: PowerConsumptionItem {
         y: 120px * floor(index / 3);
         x: 120px * Math.mod(index,3);
+
         width: 100px;
         height: 100px;
-        background: #3a3a3a;
-        border-radius: 10px;
-
-        VerticalLayout {
-            padding-top: 8px;
-            padding-bottom: 8px;
-
-            Image {
-                source: @image-url("Icons/power.svg");
-                vertical-stretch: 1;
-                horizontal-alignment: center;
-            }
-
-            Text {
-                text: "Outlet " + (index + 1);
-                vertical-stretch: 1;
-                horizontal-alignment: center;
-                font-size: 16px;
-                color: #ffffff;
-            }
-
-            Text {
-                text: (index + 1) + " kW/h";
-                vertical-stretch: 1;
-                horizontal-alignment: center;
-                font-size: 16px;
-                color: #ffffff;
-            }
-        }
+                                
+        titleText: "Outlet " + (index + 1);
+        valueText: (index + 1) + " kW/h";
     }
 }
 

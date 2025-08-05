@@ -1,0 +1,63 @@
+import { VerticalBox, Button } from "std-widgets.slint";
+import {PowerConsumptionItem} from "PowerConsumptionItem.slint";
+
+export component PerformancePage inherits Rectangle {
+
+    callback go-back();
+
+    VerticalBox {
+        padding: 24px;
+
+        Button {
+            text: "Go back";
+            clicked => {
+                go-back();
+            }
+        }
+
+        Rectangle {
+            horizontal-stretch: 1;
+            vertical-stretch: 1;
+
+            Flickable {
+                viewport_height: (120px * 6) + 100px;
+
+                interactive: true;
+
+                // array with 120 empty objects. Used only to create the same 120 rectangles. 
+                for data[index] in [
+                    {},{},{},{},{},{},{},{},{},{},
+                    {},{},{},{},{},{},{},{},{},{},
+                    {},{},{},{},{},{},{},{},{},{},
+                    {},{},{},{},{},{},{},{},{},{},
+                    {},{},{},{},{},{},{},{},{},{},
+                    {},{},{},{},{},{},{},{},{},{},
+                    {},{},{},{},{},{},{},{},{},{},
+                    {},{},{},{},{},{},{},{},{},{},
+                    {},{},{},{},{},{},{},{},{},{},
+                    {},{},{},{},{},{},{},{},{},{},
+                    {},{},{},{},{},{},{},{},{},{},
+                    {},{},{},{},{},{},{},{},{},{}
+                ]: PowerConsumptionItem {
+                    y: 80px * floor(index / 12);
+                    x: 80px * Math.mod(index,12);
+
+                    fontSize: 10;
+
+                    width: 65px;
+                    height: 65px;
+                    titleText: "Outlet " + (index + 1);
+                    valueText: (index + 1) + " kW/h";
+                }
+            }
+        }
+    }
+}
+
+export component Recipe inherits Window {
+    width: 1024px;
+    height: 600px;
+    background: #141218;
+
+    PerformancePage { }
+}

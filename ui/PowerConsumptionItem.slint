@@ -1,0 +1,52 @@
+export component PowerConsumptionItem inherits Rectangle {
+    in-out property <string> titleText;
+    in-out property <string> valueText;
+    in property <int> fontSize: 16;
+
+    private property <int> imageRotation: 0;
+
+    background: #3a3a3a;
+    border-radius: 10px;
+
+    VerticalLayout {
+        padding-top: 8px;
+        padding-bottom: 8px;
+
+        Image {
+            source: @image-url("Icons/power.svg");
+            vertical-stretch: 1;
+            horizontal-alignment: center;
+            rotation-angle: imageRotation * 1deg;
+
+            animate rotation-angle {
+                duration: 1000ms;
+            }
+        }
+
+        Text {
+            text: titleText;
+            vertical-stretch: 1;
+            horizontal-alignment: center;
+            font-size: fontSize * 1px;
+            color: #ffffff;
+        }
+
+        Text {
+            text: valueText;
+            vertical-stretch: 1;
+            horizontal-alignment: center;
+            font-size: fontSize * 1px;
+            color: #ffffff;
+        }
+    }
+
+    Timer {
+        // TODO: on timer timeout rotate the image and change the color text.
+        interval: 0ms;
+    }
+
+    // Public function to rotate the icon to 360 degrees
+    public function rotate() {
+        imageRotation += 360;
+    }
+}
