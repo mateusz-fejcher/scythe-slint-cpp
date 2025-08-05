@@ -2,6 +2,7 @@ import { Button, VerticalBox, Slider } from "std-widgets.slint";
 import { MySlider } from "MySlider.slint";
 import { HumidityPage } from "HumidityPage.slint";
 import { PowerPage } from "PowerConsumptionPage.slint";
+import { AirQualityPage } from "AirQualityPage.slint";
 
 export component AppWindow inherits Window {
     property <int> temperature: 20;
@@ -164,10 +165,10 @@ export component AppWindow inherits Window {
                 // Air Quality Page
                 Rectangle {
                     visible: current_page == "air_quality";
-                    Text {
-                        text: "Air Quality: good";
-                        font-size: 24px;
-                        color: #ffffff;
+
+                    AirQualityPage {
+                        width: 175px;
+                        height: 200px;
                     }
                 }
             }
