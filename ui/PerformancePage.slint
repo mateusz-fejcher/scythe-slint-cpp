@@ -42,10 +42,12 @@ export component PerformancePage inherits Rectangle {
                     y: 80px * floor(index / 12);
                     x: 80px * Math.mod(index,12);
 
-                    fontSize: 10;
 
                     width: 65px;
                     height: 65px;
+
+                    performanceMode: true;
+                    fontSize: 10;
                     titleText: "Outlet " + (index + 1);
                     valueText: (index + 1) + " kW/h";
                 }

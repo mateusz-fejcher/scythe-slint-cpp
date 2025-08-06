@@ -1,9 +1,11 @@
 export component PowerConsumptionItem inherits Rectangle {
+    in-out property <bool> performanceMode: false;
     in-out property <string> titleText;
     in-out property <string> valueText;
-    in property <int> fontSize: 16;
+    in-out property <int> fontSize: 16;
+    in-out property <int> imageRotation: 0;
 
-    private property <int> imageRotation: 0;
+    private property <int> rotationIntervalSeconds: 2;
 
     background: #3a3a3a;
     border-radius: 10px;
@@ -16,10 +18,10 @@ export component PowerConsumptionItem inherits Rectangle {
             source: @image-url("Icons/power.svg");
             vertical-stretch: 1;
             horizontal-alignment: center;
-            rotation-angle: imageRotation * 1deg;
+            rotation-angle: imageRotation * 360deg;
 
             animate rotation-angle {
-                duration: 1000ms;
+                duration: root.rotationIntervalSeconds * 1s;
             }
         }
 
@@ -40,13 +42,41 @@ export component PowerConsumptionItem inherits Rectangle {
         }
     }
 
-    Timer {
-        // TODO: on timer timeout rotate the image and change the color text.
-        interval: 0ms;
+    timer:= Timer {
+        interval: root.rotationIntervalSeconds * 1s;
+        running: false;
+
+        triggered => {
+            root.rotate();
+        }
     }
 
-    // Public function to rotate the icon to 360 degrees
-    public function rotate() {
-        imageRotation += 360;
+
+    // Startup trigger timer.
+    Timer {
+        interval: 50ms;
+        running: true;
+        triggered => {
+            self.running = false;
+
+            if (root.performanceMode) 
+            {
+                root.rotate();
+                timer.running = true;
+            }
+        }
+    }
+
+    function rotate() {
+        imageRotation += 1;
+    }
+}
+
+export component Recipe inherits Window {
+    PowerConsumptionItem {
+        titleText: "Power Consumption";
+        valueText: "1500 W";
+        fontSize: 20;
+        performanceMode: true;
     }
 }
