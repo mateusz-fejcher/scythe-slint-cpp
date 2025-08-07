@@ -3,6 +3,7 @@ import { MySlider } from "MySlider.slint";
 import { HumidityPage } from "HumidityPage.slint";
 import { PowerPage } from "PowerConsumptionPage.slint";
 import { AirQualityPage } from "AirQualityPage.slint";
+import {GlowingButton} from "GlowingButton.slint";
 
 export component MainPage inherits Rectangle {
     property <int> temperature: 20;
@@ -48,65 +49,75 @@ export component MainPage inherits Rectangle {
             horizontal-stretch: 1;
             spacing: 16px;
 
+            Rectangle {
+                background: #333333;
+                border-radius: 20px;
+                vertical-stretch: 1; // Ensures this Rectangle also stretches vertically
+
             // Left Side: Buttons Grid
             GridLayout {
-                vertical-stretch: 1;
-                horizontal-stretch: 8;
-                spacing: 8px; // Add spacing betw8een buttons
+                    vertical-stretch: 1;
+                    horizontal-stretch: 8;
+                    spacing: 20px; // Add spacing betw8een buttons
+                    padding: 15px;
                 
-                Button {
-                    vertical-stretch: 1;
-                    horizontal-stretch: 1;
-                    min-width: 0;
-                    preferred-width: 0;
-                    text: "Temperature: " + temperature + "°C";
-                    row: 0;
-                    col: 0;
-                    checked: current_page == "temperature"; // Bind checked state to current_page
+                GlowingButton {
+                        vertical-stretch: 1;
+                        horizontal-stretch: 1;
+                        min-width: 0;
+                        preferred-width: 0;
+                        text: "Temperature: " + temperature + "°C";
+                        row: 0;
+                        col: 0;
+                        checked: current_page == "temperature"; // Bind checked state to current_page
                     clicked => {
-                        current_page = "temperature";
+                            current_page = "temperature";
+                        }
                     }
-                }
 
-                Button {
-                    vertical-stretch: 1;
-                    horizontal-stretch: 1;
-                    min-width: 0;
-                    preferred-width: 0;
-                    text: "Humidity: " + humidity_info;
-                    row: 0;
-                    col: 1;
-                    checked: current_page == "humidity"; // Bind checked state to current_page
+                    GlowingButton {
+                        vertical-stretch: 1;
+                        horizontal-stretch: 1;
+                        min-width: 0;
+                        preferred-width: 0;
+                        text: "Humidity: " + humidity_info;
+                        glowColor: blue;
+                        row: 0;
+                        col: 1;
+                        checked: current_page == "humidity"; // Bind checked state to current_page
                     clicked => {
-                        current_page = "humidity";
+                            current_page = "humidity";
+                        }
                     }
-                }
 
-                Button {
-                    vertical-stretch: 1;
-                    horizontal-stretch: 1;
-                    min-width: 0;
-                    preferred-width: 0;
-                    text: "Power consumption: 25.0kW/h";
-                    row: 1;
-                    col: 0;
-                    checked: current_page == "power"; // Bind checked state to current_page
+                    GlowingButton {
+                        vertical-stretch: 1;
+                        horizontal-stretch: 1;
+                        min-width: 0;
+                        preferred-width: 0;
+                        text: "Power consumption: 25.0kW/h";
+                        glowColor: yellow;
+                        row: 1;
+                        col: 0;
+                        checked: current_page == "power"; // Bind checked state to current_page
                     clicked => {
-                        current_page = "power";
+                            current_page = "power";
+                        }
                     }
-                }
 
-                Button {
-                    vertical-stretch: 1;
-                    horizontal-stretch: 1;
-                    min-width: 0;
-                    preferred-width: 0;
-                    text: "Air quality: good";
-                    row: 1;
-                    col: 1;
-                    checked: current_page == "air_quality"; // Bind checked state to current_page
+                    GlowingButton {
+                        vertical-stretch: 1;
+                        horizontal-stretch: 1;
+                        min-width: 0;
+                        preferred-width: 0;
+                        text: "Air quality: good";
+                        glowColor: white;
+                        row: 1;
+                        col: 1;
+                        checked: current_page == "air_quality"; // Bind checked state to current_page
                     clicked => {
-                        current_page = "air_quality";
+                            current_page = "air_quality";
+                        }
                     }
                 }
             }
