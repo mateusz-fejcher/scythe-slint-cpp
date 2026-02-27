@@ -1,0 +1,208 @@
+import { Button, VerticalBox, Slider } from "std-widgets.slint";
+import { MySlider } from "MySlider.slint";
+import { HumidityPage } from "HumidityPage.slint";
+import { PowerPage } from "PowerConsumptionPage.slint";
+import { AirQualityPage } from "AirQualityPage.slint";
+import { GlowingButton } from "GlowingButton.slint";
+import { HumidityButton } from "HumidityButton.slint";
+
+export component MainPage inherits Rectangle {
+    property <int> temperature: 20;
+    property <string> humidity_info: "medium"; // Tracks the current humidity level
+    property <string> current_page: "temperature"; // Tracks the current page
+
+    callback go-to-performance();
+
+    VerticalBox {
+        padding: 24px;
+
+        // Header
+        HorizontalLayout {
+            alignment: start;
+            spacing: 100px;
+
+            HorizontalLayout {
+                spacing: 5px;
+                alignment: start;
+                Text {
+                    text: "Hello, Mateusz!";
+                    font-size: 32px;
+                    color: #ffffff;
+                }
+
+                Image {
+                    width: 42px;
+                    height: 42px;
+                    source: @image-url("../ui/Icons/waving-hand.svg");
+                }
+            }
+
+            Button {
+                text: "Performance";
+                clicked => {
+                    go-to-performance();
+                }
+            }
+        }
+
+        HorizontalLayout {
+            vertical-stretch: 9;
+            horizontal-stretch: 1;
+            spacing: 16px;
+
+            Rectangle {
+                background: #333333;
+                border-radius: 20px;
+                vertical-stretch: 1; // Ensures this Rectangle also stretches vertically
+
+            // Left Side: Buttons Grid
+            GridLayout {
+                    vertical-stretch: 1;
+                    horizontal-stretch: 8;
+                    spacing: 20px; // Add spacing betw8een buttons
+                    padding: 15px;
+                    GlowingButton {
+                        vertical-stretch: 1;
+                        horizontal-stretch: 1;
+                        min-width: 0;
+                        preferred-width: 0;
+                        iconSource: @image-url("../ui/Icons/thermostat.svg");
+                        text: "Temperature: " + temperature + "°C";
+                        row: 0;
+                        col: 0;
+                        checked: current_page == "temperature"; // Bind checked state to current_page
+                    clicked => {
+                            current_page = "temperature";
+                        }
+                    }
+
+                    GlowingButton {
+                        vertical-stretch: 1;
+                        horizontal-stretch: 1;
+                        min-width: 0;
+                        preferred-width: 0;
+                        iconSource: @image-url("../ui/Icons/water-drop.svg");
+                        text: "Humidity: " + humidity_info;
+                        glowColor: blue;
+                        row: 0;
+                        col: 1;
+                        checked: current_page == "humidity"; // Bind checked state to current_page
+                    clicked => {
+                            current_page = "humidity";
+                        }
+                    }
+
+                    GlowingButton {
+                        vertical-stretch: 1;
+                        horizontal-stretch: 1;
+                        min-width: 0;
+                        preferred-width: 0;
+                        iconSource: @image-url("../ui/Icons/voltage.svg");
+                        text: "Power consumption: 25.0kW/h";
+                        glowColor: yellow;
+                        row: 1;
+                        col: 0;
+                        checked: current_page == "power"; // Bind checked state to current_page
+                    clicked => {
+                            current_page = "power";
+                        }
+                    }
+
+                    GlowingButton {
+                        vertical-stretch: 1;
+                        horizontal-stretch: 1;
+                        min-width: 0;
+                        preferred-width: 0;
+                        iconSource: @image-url("../ui/Icons/air.svg");
+                        text: "Air quality: good";
+                        glowColor: white;
+                        row: 1;
+                        col: 1;
+                        checked: current_page == "air_quality"; // Bind checked state to current_page
+                    clicked => {
+                            current_page = "air_quality";
+                        }
+                    }
+                }
+            }
+
+            // Side Panel
+            Rectangle {
+                preferred-width: 340px;
+                vertical-stretch: 1;
+                background: #2c2c2c;
+                Rectangle {
+                    visible: current_page == "temperature";
+                    MySlider {
+                        height: 100%;
+                        width: 50%;
+                        minimum: 0;
+                        maximum: 30;
+                        value: temperature;
+                        visible: current_page == "temperature";
+
+                        valueChanged(value) => {
+                            temperature = value;
+                        }
+                    }
+
+                    Text {
+                        text: round(temperature) + "°C";
+                        font-size: 24px;
+                        color: #ffffff;
+                    }
+                }
+
+                // Humidity Page
+                Rectangle {
+                    visible: current_page == "humidity";
+                    VerticalBox {
+                        spacing: 8px; // Add spacing between buttons
+                        HumidityButton {
+                            text: "High";
+                            selected: humidity_info == "high"; // Bind checked state to humidity_info
+                            clicked => {
+                                humidity_info = "high";
+                            }
+                        }
+
+                        HumidityButton {
+                            text: "Medium";
+                            selected: humidity_info == "medium"; // Bind checked state to humidity_info
+                            clicked => {
+                                humidity_info = "medium";
+                            }
+                        }
+
+                        HumidityButton {
+                            text: "Low";
+                            selected: humidity_info == "low"; // Bind checked state to humidity_info
+                            clicked => {
+                                humidity_info = "low";
+                            }
+                        }
+                    }
+                }
+
+                // Power Consumption Page
+                Rectangle {
+                    visible: current_page == "power";
+                    PowerPage {
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+
+                // Air Quality Page
+                Rectangle {
+                    visible: current_page == "air_quality";
+
+                    AirQualityPage {
+                        width: 175px;
+                        height: 200px;
+                    }
+                }
+            }
+        }
+    }
+}

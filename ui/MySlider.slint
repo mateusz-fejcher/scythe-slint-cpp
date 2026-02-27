@@ -1,0 +1,62 @@
+import { VerticalBox, HorizontalBox } from "std-widgets.slint";
+
+export component MySlider inherits Rectangle {
+    in-out property <float> maximum: 100;
+    in-out property <float> minimum: 0;
+    in-out property <float> value;
+
+    callback valueChanged(int);
+
+    min-height: 100px;
+    min-width: 24px;
+    horizontal-stretch: 0;
+    vertical-stretch: 0;
+
+    border-radius: root.width / 2;
+    background: touch.pressed ? #bbb : #aaa;
+    border-width: 1px;
+    border-color: root.background.darker(25%);
+    clip: true;
+
+    handle := Rectangle {
+        width: parent.width;
+        height: self.width;
+        border-width: 3px;
+        border-radius: self.height / 2;
+        background: #ff0000;
+        y: (root.height) * (1 - (root.value - root.minimum) / (root.maximum - root.minimum));
+
+        Rectangle {
+            min-width: 16px;
+            height: root.height;
+            background: #ff0000;
+            y: handle.height / 2;
+        }
+    }
+
+    touch := TouchArea {
+        moved => {
+            if (self.enabled && self.pressed) {
+                root.value = (root.height / 1px - self.mouse-y / 1px) / ((root.height / 1px) / (root.maximum - root.minimum));
+                root.value = min(root.value, root.maximum);
+                root.value = max(root.value, root.minimum);
+                root.valueChanged(root.value);
+            }
+        }
+    }
+}
+
+export component Recipe inherits Window {
+    HorizontalBox {
+        alignment: start;
+        slider := MySlider {
+            minimum: 0;
+            maximum: 30;
+
+            Text {
+                text: "\{round(slider.value)}°C";
+                color: #000;
+            }
+        }
+    }
+}

@@ -1,0 +1,72 @@
+import { VerticalBox } from "std-widgets.slint";
+
+export component AirQualityEntry inherits Rectangle {
+    in-out property <string> topText;
+    in-out property <string> bottomText;
+    in-out property <image> iconSource;
+
+    horizontal-stretch: 1;
+    vertical-stretch: 1;
+
+    // Row 1
+    HorizontalLayout {
+        spacing: 8px;
+
+        // Rectnagle to center vertically the Iamge.
+        Rectangle {
+            vertical-stretch: 1;
+            preferred-width: 32px;
+
+            Image {
+                width: 32px;
+                height: 32px;
+                source: iconSource;
+            }
+        }
+
+        VerticalLayout {
+            horizontal-stretch: 1;
+
+            Text {
+                text: topText;
+                color: #ffffff;
+                font-weight: 700;
+                font-size: 14px;
+            }
+
+            Text {
+                color: #ffffff;
+                text: bottomText;
+            }
+        }
+    }
+}
+
+export component AirQualityPage inherits Rectangle {
+    VerticalLayout {
+        spacing: 10px;
+        AirQualityEntry {
+            iconSource: @image-url("../ui/Icons/co-2-cloud.svg");
+            topText: "CO2 Levels";
+            bottomText: "412 ppm";
+        }
+
+        AirQualityEntry {
+            iconSource: @image-url("../ui/Icons/cloud.svg");
+            topText: "PM2.5 Particulate\nMatter";
+            bottomText: "35 µg/m³";
+        }
+
+        AirQualityEntry {
+            iconSource: @image-url("../ui/Icons/eye.svg");
+            topText: "Visibility";
+            bottomText: "6.4 km";
+        }
+
+        AirQualityEntry {
+            iconSource: @image-url("../ui/Icons/wave.svg");
+            topText: "Air Pressure";
+            bottomText: "1013 hPa";
+        }
+    }
+}

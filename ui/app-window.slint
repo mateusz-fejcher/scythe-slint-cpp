@@ -1,17 +1,19 @@
-import { Button, VerticalBox } from "std-widgets.slint";
+import { MainPage } from "MainPage.slint";
+import { PerformancePage } from "PerformancePage.slint";
 
 export component AppWindow inherits Window {
-    in-out property<int> counter: 42;
-    callback request-increase-value();
-    VerticalBox {
-        Text {
-            text: "Counter: \{root.counter}";
+    background: #141218;
+    full-screen: true;
+
+    // state variable to control which page is shown
+    property <bool> performanceStateEnabled: false;
+
+    Rectangle { 
+        if (!performanceStateEnabled) : MainPage {
+            go-to-performance => { performanceStateEnabled = true; }
         }
-        Button {
-            text: "Increase value";
-            clicked => {
-                root.request-increase-value();
-            }
+        if (performanceStateEnabled) : PerformancePage {
+            go-back => { performanceStateEnabled = false; }
         }
-     }
+    }
 }

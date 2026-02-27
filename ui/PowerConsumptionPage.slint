@@ -1,0 +1,60 @@
+import { ScrollView } from "std-widgets.slint";
+import { PowerConsumptionItem } from "PowerConsumptionItem.slint";
+export component MyPower inherits Rectangle {
+    in-out property <float> text;
+
+    horizontal-stretch: 1;
+    vertical-stretch: 1;
+    background: #ff0000;
+
+    Text {
+        text: root.text;
+    }
+}
+
+export component PowerPage inherits Flickable {
+    viewport_height: (120px * 6) + 100px;
+
+    interactive: true;
+
+    // array with 21 empty objects. Used only to create the same 21 rectangles. 
+    for data[index] in [
+        { },
+        { },
+        { },
+        { },
+        { },
+        { },
+        { },
+        { },
+        { },
+        { },
+        { },
+        { },
+        { },
+        { },
+        { },
+        { },
+        { },
+        { },
+        { },
+        { },
+        { },
+    ]: PowerConsumptionItem {
+        y: 120px * floor(index / 3);
+        x: 120px * Math.mod(index,3);
+
+        width: 100px;
+        height: 100px;
+                                
+        titleText: "Outlet " + (index + 1);
+        valueText: (index + 1) + " kW/h";
+    }
+}
+
+export component Recipe inherits Window {
+    PowerPage {
+        width: 400px;
+        height: 400px;
+    }
+}
