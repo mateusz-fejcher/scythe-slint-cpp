@@ -3,7 +3,8 @@ import { MySlider } from "MySlider.slint";
 import { HumidityPage } from "HumidityPage.slint";
 import { PowerPage } from "PowerConsumptionPage.slint";
 import { AirQualityPage } from "AirQualityPage.slint";
-import {GlowingButton} from "GlowingButton.slint";
+import { GlowingButton } from "GlowingButton.slint";
+import { HumidityButton } from "HumidityButton.slint";
 
 export component MainPage inherits Rectangle {
     property <int> temperature: 20;
@@ -60,8 +61,7 @@ export component MainPage inherits Rectangle {
                     horizontal-stretch: 8;
                     spacing: 20px; // Add spacing betw8een buttons
                     padding: 15px;
-                
-                GlowingButton {
+                    GlowingButton {
                         vertical-stretch: 1;
                         horizontal-stretch: 1;
                         min-width: 0;
@@ -158,25 +158,25 @@ export component MainPage inherits Rectangle {
                     visible: current_page == "humidity";
                     VerticalBox {
                         spacing: 8px; // Add spacing between buttons
-                        Button {
+                        HumidityButton {
                             text: "High";
-                            checked: humidity_info == "high"; // Bind checked state to humidity_info
+                            selected: humidity_info == "high"; // Bind checked state to humidity_info
                             clicked => {
                                 humidity_info = "high";
                             }
                         }
 
-                        Button {
+                        HumidityButton {
                             text: "Medium";
-                            checked: humidity_info == "medium"; // Bind checked state to humidity_info
+                            selected: humidity_info == "medium"; // Bind checked state to humidity_info
                             clicked => {
                                 humidity_info = "medium";
                             }
                         }
 
-                        Button {
+                        HumidityButton {
                             text: "Low";
-                            checked: humidity_info == "low"; // Bind checked state to humidity_info
+                            selected: humidity_info == "low"; // Bind checked state to humidity_info
                             clicked => {
                                 humidity_info = "low";
                             }

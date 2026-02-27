@@ -2,9 +2,8 @@ import { MainPage } from "MainPage.slint";
 import { PerformancePage } from "PerformancePage.slint";
 
 export component AppWindow inherits Window {
-    width: 1024px;
-    height: 600px;
     background: #141218;
+    full-screen: true;
 
     // state variable to control which page is shown
     property <bool> performanceStateEnabled: false;

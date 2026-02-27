@@ -20,9 +20,9 @@ export component PowerConsumptionItem inherits Rectangle {
             source: @image-url("Icons/power.svg");
             vertical-stretch: 1;
             horizontal-alignment: center;
-            rotation-angle: imageRotation * 360deg;
+            transform-rotation: imageRotation * 360deg;
 
-            animate rotation-angle {
+            animate transform-rotation {
                 duration: root.rotationIntervalSeconds * 1s;
             }
         }

@@ -1,0 +1,25 @@
+export component HumidityButton inherits Rectangle {
+    in-out property text <=> txt.text;
+    in-out property <bool> selected: false;
+
+    callback clicked <=> touch.clicked;
+
+    border-radius: root.height / 2;
+    border-width: 1px;
+    border-color: root.background.darker(25%);
+    background: touch.pressed ? #6b8282 : touch.has-hover ? #242424 :#313131;
+    min-width: txt.preferred-width + 20px;
+    txt := Text {
+        x: (parent.width - self.width)/2 + (touch.pressed ? 2px : 0);
+        y: (parent.height - self.height)/2 + (touch.pressed ? 1px : 0);
+        color: selected ? #5588ff : #fff;
+    }
+    touch := TouchArea { }
+}
+
+export component Recipe inherits Window {
+    VerticalLayout {
+        alignment: start;
+        HumidityButton { text: "Button"; }
+    }
+}
